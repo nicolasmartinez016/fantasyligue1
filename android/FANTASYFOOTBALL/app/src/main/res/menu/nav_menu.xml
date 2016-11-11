@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_menu_1"
+        android:title="menu 1"
+        android:icon="@drawable/squad_building_icon"
+        />
+    <item android:id="@+id/nav_menu_2"
+        android:title="menu 2"/>
+</menu>

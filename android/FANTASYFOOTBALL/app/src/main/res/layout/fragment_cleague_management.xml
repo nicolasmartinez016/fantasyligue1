@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="nmartinez016.univtln.fr.fantasyfootball.fragments.CLeagueManagementFragment">
+
+    <RelativeLayout android:layout_height="match_parent"
+        android:layout_width="match_parent">
+    <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment"
+            />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/league_management_listview"
+            >
+        </ListView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="creer"
+            android:id="@+id/league_management_create_league"
+            android:layout_below="@id/league_management_listview"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ligues publiques"
+            android:id="@+id/league_management_public_leagues"
+            android:layout_below="@id/league_management_create_league"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/dialog_player_image"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_firstname"
+        android:layout_below="@id/dialog_player_image"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_lastname"
+        android:layout_below="@id/dialog_firstname"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_age"
+        android:layout_below="@id/dialog_lastname"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/dialog_age"
+        android:id="@+id/dialog_club_logo"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/dialog_goals_icon"
+        android:layout_below="@id/dialog_club_logo"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_club_logo"
+        android:id="@+id/dialog_goals_textview"
+        android:layout_alignBaseline="@id/dialog_goals_icon"
+        android:layout_toRightOf="@id/dialog_goals_icon"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/dialog_assists_icon"
+        android:layout_below="@id/dialog_goals_icon"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_assists_textview"
+        android:layout_below="@id/dialog_goals_icon"
+        android:layout_alignBaseline="@id/dialog_assists_icon"
+        android:layout_toRightOf="@id/dialog_assists_icon"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/dialog_cards_icon"
+        android:layout_below="@id/dialog_assists_icon"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_assists_icon"
+        android:layout_alignBaseline="@id/dialog_cards_icon"
+        android:layout_toRightOf="@id/dialog_cards_icon"
+        android:id="@+id/dialog_cards_textview"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_cards_icon"
+        android:id="@+id/dialog_minutes_played_textview"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_minutes_played_textview"
+        android:id="@+id/dialog_avg_grade"
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/dialog_avg_grade"
+        android:id="@+id/dialog_1match_ago"
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/dialog_avg_grade"
+        android:id="@+id/dialog_2matches_ago"
+        android:layout_toRightOf="@id/dialog_1match_ago"
+
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/dialog_avg_grade"
+        android:id="@+id/dialog_3matches_ago"
+        android:layout_toRightOf="@id/dialog_2matches_ago"
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/dialog_avg_grade"
+        android:id="@+id/dialog_4matches_ago"
+        android:layout_toRightOf="@id/dialog_3matches_ago"
+        />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@id/dialog_avg_grade"
+        android:id="@+id/dialog_5matches_ago"
+        android:layout_toRightOf="@id/dialog_4matches_ago"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/dialog_price_icon"
+        android:layout_below="@id/dialog_1match_ago"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_1match_ago"
+        android:layout_toRightOf="@id/dialog_price_icon"
+        android:id="@+id/dialog_price_textview"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_price_icon"
+        android:id="@+id/dialog_player_owner_textview"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/dialog_player_owner_textview"
+        android:layout_toRightOf="@id/dialog_player_owner_textview"
+        android:id="@+id/dialog_buy_button"
+        />
+
+
+    <nmartinez016.univtln.fr.fantasyfootball.views.CPlayerPositionsOnFieldView
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        android:id="@+id/dialog_field"
+        android:layout_toRightOf="@id/dialog_player_image"
+        />
+
+
+
+
+</RelativeLayout>

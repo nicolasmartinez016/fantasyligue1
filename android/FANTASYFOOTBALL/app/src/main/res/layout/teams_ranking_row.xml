@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_logo"
+        />
+    
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_name"
+        android:layout_toRightOf="@id/teams_ranking_logo"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_weeks"
+        android:layout_toRightOf="@id/teams_ranking_name"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_wins"
+        android:layout_toRightOf="@id/teams_ranking_weeks"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_draws"
+        android:layout_toRightOf="@id/teams_ranking_wins"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_losses"
+        android:layout_toRightOf="@id/teams_ranking_draws"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_scored"
+        android:layout_toRightOf="@id/teams_ranking_losses"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_conceded"
+        android:layout_toRightOf="@id/teams_ranking_scored"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_goalaverage"
+        android:layout_toRightOf="@id/teams_ranking_conceded"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:id="@+id/teams_ranking_points"
+        android:layout_toRightOf="@id/teams_ranking_goalaverage"
+        android:layout_marginLeft="10dp"
+        />
+
+</RelativeLayout>

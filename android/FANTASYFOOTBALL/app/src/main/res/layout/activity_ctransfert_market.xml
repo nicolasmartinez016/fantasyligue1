@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".activities.CTransfertMarketActivity"
+    android:background="@drawable/ligue_1_white"
+    >
+
+<!--
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_profile_button_text"
+        android:id="@+id/transfert_playerstobuy_showdetails"
+        android:layout_below="@id/transfert_playerstobuy_listview"
+        android:onClick="showProfile"
+        />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_buy_button_text"
+        android:id="@+id/transfert_playerstobuy_acheter"
+        android:layout_below="@id/transfert_playerstobuy_showdetails"
+
+        />
+
+-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_research_textview"
+        android:id="@+id/transfert_research_textview"
+        android:background="@color/white"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_name_textview"
+        android:layout_below="@id/transfert_research_textview"
+        android:id="@+id/transfert_name_textview"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        />
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@id/transfert_name_textview"
+        android:id="@+id/transfert_playerstobuy_edittext"
+        android:layout_toRightOf="@id/transfert_name_textview"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_team_textview"
+        android:id="@+id/transfert_team_textview"
+        android:layout_alignBaseline="@id/transfert_playerstobuy_edittext"
+        android:layout_toRightOf="@id/transfert_playerstobuy_edittext"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/transfert_team_textview"
+        android:layout_toRightOf="@id/transfert_team_textview"
+        android:id="@+id/transfert_team_spinner"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_age_textview"
+        android:id="@+id/transfert_age_textview"
+        android:layout_below="@id/transfert_team_textview"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        />
+
+
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/transfert_age_textview"
+        android:id="@+id/transfert_age_radio_group"
+        android:orientation="horizontal"
+        android:layout_toRightOf="@id/transfert_age_textview"
+        >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/transfert_age_not_specified_radiobutton"
+            android:text="@string/transfert_not_specified_text"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/transfert_age_eq_radiobutton"
+            android:text="@string/transfert_radiobutton_eq_text"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/transfert_age_sup_radiobutton"
+            android:text="@string/transfert_radiobutton_sup_text"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/transfert_age_inf_radiobutton"
+            android:text="@string/transfert_radiobutton_inf_text"
+            />
+
+        </RadioGroup>
+
+    <!--
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@id/transfert_age_radio_group"
+        android:layout_toRightOf="@id/transfert_age_radio_group"
+        android:id="@+id/transfert_age_edit_text"
+        />
+-->
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/transfert_spinner_age"
+        android:layout_alignBaseline="@id/transfert_age_textview"
+        android:layout_toRightOf="@id/transfert_age_radio_group"
+        android:entries="@array/list_age_array"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/transfert_research_button_text"
+        android:onClick="search"
+        android:id="@+id/transfert_playerstobuy_rechercher"
+        android:layout_below="@id/transfert_age_textview"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="prov"
+        android:layout_alignBaseline="@id/transfert_playerstobuy_rechercher"
+        android:layout_toRightOf="@id/transfert_playerstobuy_rechercher"
+        android:onClick="switchActivity"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:id="@+id/transfert_playerstobuy_listview"
+        android:layout_below="@id/transfert_playerstobuy_rechercher"
+        />
+
+
+
+</RelativeLayout>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffffff">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player1_layout"
+            >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image1"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name1"
+                    android:layout_below="@id/myplayers_image1"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name1"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton1"
+                />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player2_layout"
+                android:layout_toRightOf="@id/myplayers_player1_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image2"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name2"
+                    android:layout_below="@id/myplayers_image2"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name2"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton2"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player3_layout"
+                android:layout_toRightOf="@id/myplayers_player2_layout"
+                >
+
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image3"
+                />
+
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_name3"
+                android:layout_below="@id/myplayers_image3"
+                android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name3"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton3"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player4_layout"
+                android:layout_toRightOf="@id/myplayers_player3_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image4"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name4"
+                    android:layout_below="@id/myplayers_image4"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name4"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton4"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player5_layout"
+                android:layout_toRightOf="@id/myplayers_player4_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image5"
+                    android:layout_toRightOf="@id/myplayers_image5"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name5"
+                    android:layout_below="@id/myplayers_image5"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name5"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton5"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player6_layout"
+                android:layout_toRightOf="@id/myplayers_player5_layout"
+            >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image6"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name6"
+                    android:layout_below="@id/myplayers_image6"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name6"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton6"
+                    />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player7_layout"
+                android:layout_toRightOf="@id/myplayers_player6_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image7"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name7"
+                    android:layout_below="@id/myplayers_image7"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name7"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton7"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player8_layout"
+                android:layout_toRightOf="@id/myplayers_player7_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image8"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name8"
+                    android:layout_below="@id/myplayers_image8"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name8"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton8"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/myplayers_player9_layout"
+                android:layout_toRightOf="@id/myplayers_player8_layout"
+                >
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:id="@+id/myplayers_image9"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/myplayers_name9"
+                    android:layout_below="@id/myplayers_image9"
+                    android:layout_centerHorizontal="true"
+                />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myplayers_name9"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/myplayers_radiobutton9"
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </HorizontalScrollView>
+</RelativeLayout>
+
