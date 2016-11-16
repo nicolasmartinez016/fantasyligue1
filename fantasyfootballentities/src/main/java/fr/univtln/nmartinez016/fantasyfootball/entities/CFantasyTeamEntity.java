@@ -36,13 +36,16 @@ public class CFantasyTeamEntity implements Serializable {
     private int mId;
     @ManyToOne(cascade = CascadeType.MERGE)
     private CUserEntity mUser;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "fantasyfootball")
     private List<CYourPlayerEntry> mYourPlayerEntries = new ArrayList<CYourPlayerEntry>();
     private boolean mSelected;
     @ManyToOne
     @JoinColumn
     private CFantasyLeagueEntity mFantasyLeague;
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fantasyfootball")
+    private List<CFantasyTeamByWeek> mFantasyTeamsByWeek;
 
     public CFantasyTeamEntity(){}
 
@@ -99,6 +102,21 @@ public class CFantasyTeamEntity implements Serializable {
         mYourPlayerEntries = pYourPlayerEntries;
     }
 
+    public List<CFantasyTeamByWeek> getFantasyTeamsByWeek(){
+        return mFantasyTeamsByWeek;
+    }
+
+    public void setFantasyTeamsByWeek(List<CFantasyTeamByWeek> pFantasyTeamsByWeek){
+        mFantasyTeamsByWeek = pFantasyTeamsByWeek;
+    }
+
+    public void addFantasyTeamByWeek(CFantasyTeamByWeek pFantasyTeamByWeek){
+        if (mFantasyTeamsByWeek == null){
+            mFantasyTeamsByWeek = new ArrayList<CFantasyTeamByWeek>();
+        }
+        mFantasyTeamsByWeek.add(pFantasyTeamByWeek);
+    }
+
     public void addYourPlayerEntry(CYourPlayerEntry pYourPlayerEntry){
         if (mYourPlayerEntries == null){
             mYourPlayerEntries = new ArrayList<CYourPlayerEntry>();
@@ -116,6 +134,36 @@ public class CFantasyTeamEntity implements Serializable {
             }
         }
         return null;
+    }
+
+    /*
+     * method to get the total points your team received, week after week
+     * it is useful to determine the ranking between the users in a league
+     */
+
+    @JsonIgnore
+    public int getPoints(){
+        int lPoints = 0;
+        for (CFantasyTeamByWeek lFantasyTeamByWeek : mFantasyTeamsByWeek){
+            lPoints += lFantasyTeamByWeek.getPoints();
+        }
+        return lPoints;
+    }
+
+    /*
+     * method to get the amount of points your team received during a
+     * specific week.
+     */
+
+    @JsonIgnore
+    public int getPointsByWeekAt(int pWeek){
+        int lPoints = 0;
+        for (CFantasyTeamByWeek lFantasyTeamByWeek : mFantasyTeamsByWeek){
+            if (lFantasyTeamByWeek.getWeek() == pWeek){
+                lPoints = lFantasyTeamByWeek.getPoints();
+            }
+        }
+        return lPoints;
     }
 
     /*
@@ -256,6 +304,10 @@ public class CFantasyTeamEntity implements Serializable {
         return lPlayers;
     }
 
+    @PostPersist
+    public void postPersist(){
+        System.out.println("fantasy team persisted !");
+    }
 
 
     public static class CFantasyTeamBuilder{

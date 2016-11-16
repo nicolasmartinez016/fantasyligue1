@@ -1,8 +1,6 @@
 package fr.univtln.nmartinez016.fantasyfootball.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,7 +14,14 @@ public class CInvitationEntity implements Serializable {
     public static final int NOT_VALIDATED = 1;
     public static final int ACCEPTED = 0;
     public static final int REFUSED = -1;
+    @TableGenerator(
+            name = "invitationTableGenerator",
+            allocationSize = 1,
+            initialValue = 1)
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invitationTableGenerator")
+    private int mId;
     @ManyToOne
     private CUserEntity mInviter;
     @ManyToOne
@@ -32,6 +37,14 @@ public class CInvitationEntity implements Serializable {
         mInviter = pBuilder.mInviter;
         mLeagueToJoin = pBuilder.mLeagueToJoin;
         mAccepted = pBuilder.mAccepted;
+    }
+
+    public int getId(){
+        return mId;
+    }
+
+    public void setId(int pId){
+        mId = pId;
     }
 
     public CUserEntity getInviter(){

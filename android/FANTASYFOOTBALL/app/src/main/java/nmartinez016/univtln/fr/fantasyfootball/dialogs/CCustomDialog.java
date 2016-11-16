@@ -188,7 +188,6 @@ public class CCustomDialog extends DialogFragment {
         mBuyPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("buy", "user : " + CStaticVariables.getUser().getId());
                 CAction lBuyPlayer = new CBuyPlayerAction.CBuyPlayerBuilder().user(CStaticVariables.getUser()).player(mPlayer).build();
                 CTyrusClient.sendMessage(lBuyPlayer);
             }

@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univtln.nmartinez016.fantasyfootball.CConstants;
 import fr.univtln.nmartinez016.fantasyfootball.database.CCrudMethods;
 import fr.univtln.nmartinez016.fantasyfootball.database.CQueryParameter;
-import fr.univtln.nmartinez016.fantasyfootball.entities.CFantasyLeagueEntity;
-import fr.univtln.nmartinez016.fantasyfootball.entities.CPlayerEntity;
-import fr.univtln.nmartinez016.fantasyfootball.entities.CPositionEntity;
-import fr.univtln.nmartinez016.fantasyfootball.entities.CUserEntity;
+import fr.univtln.nmartinez016.fantasyfootball.entities.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ public class CCreateFantasyTeams {
 
     public static void main(String[] args) {
         CCrudMethods lCrud = new CCrudMethods();
-        CFantasyLeagueEntity lFantasyLeague = new CFantasyLeagueEntity.CFantasyLeagueBuilder().name(CFantasyLeagueEntity.BASE_LEAGUE).build();
+        CFantasyLeagueEntity lFantasyLeague = new CFantasyLeagueEntity.CFantasyLeagueBuilder().name(CFantasyLeagueEntity.BASE_LEAGUE).visibility(CFantasyLeagueEntity.VISIBILITY_PUBLIC).capacity(120).build();
         if (lCrud.openTransaction()) {
             lCrud.create(lFantasyLeague);
             lCrud.commitTransaction();

@@ -9,11 +9,13 @@ import java.io.Serializable;
  */
 public class CConnectionAction extends CAction implements Serializable {
     private String mUserId;
+    private String mUserName;
 
     public CConnectionAction(){}
 
-    public CConnectionAction(String pUserId){
-        mUserId = pUserId;
+    public CConnectionAction(CConnectionBuilder pBuilder){
+        mUserId = pBuilder.mUserId;
+        mUserName = pBuilder.mUserName;
     }
 
     public String getUserId(){
@@ -22,5 +24,34 @@ public class CConnectionAction extends CAction implements Serializable {
 
     public void setUserId(String pUserId){
         mUserId = pUserId;
+    }
+
+    public String getUserName(){
+        return mUserName;
+    }
+
+    public void setUserName(String pUserName){
+        mUserName = pUserName;
+    }
+
+    public static class CConnectionBuilder{
+        private String mUserId;
+        private String mUserName;
+
+        public CConnectionBuilder(){}
+
+        public CConnectionBuilder userId(String pUserId){
+            mUserId = pUserId;
+            return this;
+        }
+
+        public CConnectionBuilder userName(String pUserName){
+            mUserName = pUserName;
+            return this;
+        }
+
+        public CConnectionAction build(){
+            return new CConnectionAction(this);
+        }
     }
 }

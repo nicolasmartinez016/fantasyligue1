@@ -102,4 +102,16 @@ public class CClubRankingFragment extends Fragment {
         super.onPause();
         getActivity().unregisterReceiver(mBroadCastReceiverWS);
     }
+
+    public void setTeams(List<CTeamEntity> pTeams){
+        mTeams = pTeams;
+    }
+
+    public List<CTeamEntity> getTeams(){
+        return mTeams;
+    }
+
+    public ListView getListView(){
+        return mListView;
+    }
 }

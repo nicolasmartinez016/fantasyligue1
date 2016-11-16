@@ -1,6 +1,7 @@
 package fr.univtln.nmartinez016.fantasyfootball.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class CFantasyLeagueEntity implements Serializable {
     @Id
     private String mName;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "mFantasyLeague", fetch = FetchType.EAGER)
+    @JoinTable(schema = "fantasyfootball")
     private List<CFantasyTeamEntity> mFantasyTeams;
     private int mCapacity;
     private int mVisibility;
@@ -88,7 +90,17 @@ public class CFantasyLeagueEntity implements Serializable {
             pUser.getCurrentFantasyTeam().setSelected(false);
         }
         mFantasyTeams.add(new CFantasyTeamEntity.CFantasyTeamBuilder().user(pUser).select().fantasyLeague(this).build());
+        //pUser.addFantasyLeague(this);
+    }
 
+    @JsonIgnore
+    public CFantasyTeamEntity getFantasyTeamByUser(CUserEntity pUser){
+        for (CFantasyTeamEntity lFantasyTeam : mFantasyTeams){
+            if (lFantasyTeam.getUser().getId().equals(pUser.getId())){
+                return lFantasyTeam;
+            }
+        }
+        return null;
     }
 
     @PostUpdate

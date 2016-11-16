@@ -79,8 +79,6 @@ public class CClickActionDialog extends DialogFragment {
                         else if (mRadioButton3.isChecked()) {
                             if (host instanceof CTabsActivity) {
                                 // deplacer joueur
-                                Log.i("move", "player : " + CStaticVariables.getUser().getCurrentFantasyTeam().getPlayerByPosition(mPosition));
-                                Log.i("move", "nb joueurs : " + CStaticVariables.getUser().getCurrentFantasyTeam().getYourPlayerEntries().size());
                                 for (CYourPlayerEntry lYourPlayerEntry : CStaticVariables.getUser().getCurrentFantasyTeam().getYourPlayerEntries()){
                                     Log.i("move", "player : " + lYourPlayerEntry.getPlayer().getLastName() + "   - - - -   position : " + lYourPlayerEntry.getPosition().getName() + "\n");
                                 }

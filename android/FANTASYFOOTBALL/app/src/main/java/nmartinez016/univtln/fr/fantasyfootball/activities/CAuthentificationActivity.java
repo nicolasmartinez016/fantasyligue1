@@ -105,7 +105,8 @@ public class CAuthentificationActivity extends Activity {
             GoogleSignInAccount acct = result.getSignInAccount();
             EMAIL = acct.getEmail();
             Log.i("logfail", "id : " + acct.getId());
-            CAction lConnectionAction = new CConnectionAction(acct.getId());
+            String lName = acct.getDisplayName();
+            CAction lConnectionAction = new CConnectionAction.CConnectionBuilder().userId(acct.getId()).userName(lName).build();
             CTyrusClient.sendMessage(lConnectionAction);
 
         }

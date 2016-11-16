@@ -14,6 +14,9 @@ public class CPlayerInvitedInFantasyLeagueAction extends CAction implements Seri
 
     public CPlayerInvitedInFantasyLeagueAction(){}
 
+    public CPlayerInvitedInFantasyLeagueAction(CInvitationEntity pInvitation){
+        mInvitation = pInvitation;
+    }
 
     public CInvitationEntity getInvitation(){
         return mInvitation;

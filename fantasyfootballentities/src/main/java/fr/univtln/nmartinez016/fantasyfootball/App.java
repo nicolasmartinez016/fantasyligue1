@@ -21,17 +21,10 @@ public class App
     {
         CCrudMethods lCrud = new CCrudMethods();
         CUserEntity lUser = lCrud.find(CUserEntity.class, "117579333926755246721");
-        System.out.println(lUser.getSelectedLeague());
-        ObjectMapper lMapper = new ObjectMapper();
-        lMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        try {
-            String lJson = lMapper.writeValueAsString(lUser);
-            System.out.println(lJson);
-            CUserEntity lUser2 = lMapper.readValue(lJson, CUserEntity.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CFantasyTeamEntity lTeam = lCrud.find(CFantasyTeamEntity.class, 34);
+        System.out.println(lUser.getSelectedLeague().getName());
+        lUser.changeSelectedLeague(lTeam);
+        System.out.println(lUser.getSelectedLeague().getName());
+
     }
 }

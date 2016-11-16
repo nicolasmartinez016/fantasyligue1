@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.univtln.nmartinez016.fantasyfootball.database.CCrudMethods;
+import fr.univtln.nmartinez016.fantasyfootball.entities.CFantasyTeamByWeek;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CUserEntity;
 
 import java.io.IOException;
@@ -19,16 +20,10 @@ public class App
         System.out.println( "Hello World!" );
         CCrudMethods lCrud = new CCrudMethods();
         ObjectMapper lMapper = new ObjectMapper();
+        lCrud.clearCache();
         lMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         CUserEntity lUserGotten = lCrud.find(CUserEntity.class, "117579333926755246721");
-        try {
-            String lJson = lMapper.writeValueAsString(lUserGotten);
-            CUserEntity lUserDeser = lMapper.readValue(lJson, CUserEntity.class);
-            System.out.println(lUserDeser.getCurrentFantasyTeam());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(lUserGotten.getCurrentFantasyTeam().getFantasyLeague().getName());
+        System.out.println("point user team 1 week 1 : " + lUserGotten.getCurrentFantasyTeam().getPointsByWeekAt(1));
     }
 }

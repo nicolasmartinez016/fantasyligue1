@@ -84,6 +84,7 @@ public class CServer {
          */
 
         if (pAction instanceof CConnectionAction){
+            lCrudMethods.clearCache();
             System.out.println("recu connection\n");
             CConnectionAction lConnectionAction = (CConnectionAction) pAction;
             System.out.println("id gmail : " + lConnectionAction.getUserId());
@@ -92,7 +93,7 @@ public class CServer {
                 List<CFantasyLeagueEntity> lFantasyLeagues = new ArrayList<CFantasyLeagueEntity>();
                 CFantasyLeagueEntity lFantasyLeague = lCrudMethods.find(CFantasyLeagueEntity.class, CFantasyLeagueEntity.BASE_LEAGUE);
                 lFantasyLeagues.add(lFantasyLeague);
-                lUser = new CUserEntity.CUserBuilder().id(lConnectionAction.getUserId()).coins(150).fantasyLeagues(lFantasyLeagues).build();
+                lUser = new CUserEntity.CUserBuilder().id(lConnectionAction.getUserId()).name(lConnectionAction.getUserName()).coins(150).fantasyLeagues(lFantasyLeagues).build();
                 if (lCrudMethods.openTransaction()){
                     lCrudMethods.create(lUser);
                     lCrudMethods.commitTransaction();
@@ -297,13 +298,13 @@ public class CServer {
 
         else if (pAction instanceof CBuyPlayerAction){
             System.out.println("recu buy player action ! \n");
+            lCrudMethods.clearCache();
             CUserEntity lUser = ((CBuyPlayerAction) pAction).getUser();
             CPlayerEntity lPlayer = ((CBuyPlayerAction) pAction).getPlayer();
             //lUser.addYourPlayerEntry(new CYourPlayerEntry.CYourPlayerEntryBuilder().player(lPlayer).build());
             //CUserEntity lUserGotten = lCrudMethods.find(CUserEntity.class, lUser.getId());
             int lBuyResult = lUser.buyPlayer(lPlayer);
 
-            System.out.println("user received : " + lUser.getId());
             if (lBuyResult == CUserEntity.BUYING_SUCCESS){
                 if (lCrudMethods.openTransaction()){
                     lCrudMethods.update(lUser);
@@ -335,19 +336,9 @@ public class CServer {
             CPutPlayerOnField lPutPlayerOnField = (CPutPlayerOnField) pAction;
             CUserEntity lUser = lPutPlayerOnField.getUser();
             CPositionEntity lPosition = lPutPlayerOnField.getPosition();
-            if (lPosition != null){
-                System.out.println("position : " + lPosition.getName());
-            }
-            else{
-                System.out.println("position null");
-            }
+
             CPlayerEntity lPlayer = lPutPlayerOnField.getPlayer();
-            if (lPlayer != null){
-                System.out.println("player : " + lPlayer.getLastName());
-            }
-            else{
-                System.out.println("player null");
-            }
+
             int lPutOnFieldResult = lUser.putPlayerOnField(lPlayer, lPosition);
             if (lCrudMethods.openTransaction()){
                 lCrudMethods.update(lUser);
@@ -359,20 +350,13 @@ public class CServer {
         }
 
         else if (pAction instanceof CMovePlayerAction){
-            System.out.println("recu move player action ! \n");
             CMovePlayerAction lMovePlayerAction = (CMovePlayerAction) pAction;
             CUserEntity lUser = lMovePlayerAction.getUser();
             CPositionEntity lInitialPosition = lMovePlayerAction.getInitialPosition();
-            System.out.println("initial position : " + lInitialPosition.getName());
             CPlayerEntity lPlayer = lUser.getCurrentFantasyTeam().getPlayerByPosition(lInitialPosition);
-            System.out.println("player : " + lPlayer.getLastName());
             CPositionEntity lFinalPosition = lMovePlayerAction.getFinalPosition();
-            System.out.println("final position : " + lFinalPosition.getName());
             int lResultMove = lUser.movePlayer(lInitialPosition, lFinalPosition);
-            System.out.println("result move : " + lResultMove);
-            for (CYourPlayerEntry lYourPlayerEntry : lUser.getCurrentFantasyTeam().getYourPlayerEntries()){
-                System.out.println("nouvelle position : " + lYourPlayerEntry.getPosition().getName() + "  --- joueur : " + lYourPlayerEntry.getPlayer().getLastName());
-            }
+
             if (lCrudMethods.openTransaction()){
                 lCrudMethods.update(lUser);
                 lCrudMethods.commitTransaction();
@@ -393,10 +377,15 @@ public class CServer {
         else if (pAction instanceof CCreateLeagueAction){
             CCreateLeagueAction lCreateLeagueAction = (CCreateLeagueAction) pAction;
             CFantasyLeagueEntity lFantasyLeague = lCreateLeagueAction.getFantasyLeague();
-            CUserEntity lUser = lCreateLeagueAction.getCreator();
-            lFantasyLeague.addUser(lUser);
             if (lCrudMethods.openTransaction()){
                 lCrudMethods.create(lFantasyLeague);
+                lCrudMethods.commitTransaction();
+            }
+            CUserEntity lUser = lCreateLeagueAction.getCreator();
+            lUser.addFantasyLeague(lCrudMethods.find(CFantasyLeagueEntity.class, lFantasyLeague.getName()));
+            System.out.println(lUser.getFantasyLeagues().size());
+            if (lCrudMethods.openTransaction()){
+                lCrudMethods.update(lUser);
                 lCrudMethods.commitTransaction();
             }
 
@@ -422,10 +411,10 @@ public class CServer {
             CJoinFantasyLeagueAction lJoinLeagueAction = (CJoinFantasyLeagueAction) pAction;
             CFantasyLeagueEntity lFantasyLeague = lJoinLeagueAction.getFantasyLeague();
             CUserEntity lUser = lJoinLeagueAction.getUser();
-            lFantasyLeague.addUser(lUser);
+            lUser.addFantasyLeague(lFantasyLeague);
 
             if (lCrudMethods.openTransaction()){
-                lCrudMethods.update(lFantasyLeague);
+                lCrudMethods.update(lUser);
                 lCrudMethods.commitTransaction();
             }
 
@@ -433,11 +422,62 @@ public class CServer {
             pPeer.getBasicRemote().sendObject(lLeagueJoined);
         }
 
+        /*
+         * when receiving an object loadpublicfantasyleactionaction,
+         * we load all the public leagues from the database and send
+         * them back to the client
+         */
+
         else if (pAction instanceof CLoadPublicFantasyLeaguesAction){
-            CLoadPublicFantasyLeaguesAction lLoadPublicFantasyLeaguesAction = (CLoadPublicFantasyLeaguesAction) pAction;
             List<CFantasyLeagueEntity> lPublicFantasyLeagues = (List<CFantasyLeagueEntity>) lCrudMethods.findWithNamedQuery(CFantasyLeagueEntity.GET_BY_VISIBILITY, CQueryParameter.with(CFantasyLeagueEntity.PARAMETER_PUBLIC, CFantasyLeagueEntity.VISIBILITY_PUBLIC).parameters());
             CAction lPublicLeaguesLoaded = new CPublicFantasyLeaguesLoadedAction(lPublicFantasyLeagues);
             pPeer.getBasicRemote().sendObject(lPublicLeaguesLoaded);
+        }
+
+        /*
+         * when receiving an object inviteinfantasyleagueaction, ..
+         */
+
+        else if (pAction instanceof CInvitePlayerInFantasyLeagueAction){
+            CInvitePlayerInFantasyLeagueAction lInvite = (CInvitePlayerInFantasyLeagueAction) pAction;
+            for (Session lSession : mSessions){
+                lSession.getBasicRemote().sendObject(new CPlayerInvitedInFantasyLeagueAction(lInvite.getInvitation()));
+            }
+        }
+
+        else if (pAction instanceof CCheckLeagueNameAvailability){
+            boolean lAvailable;
+            CCheckLeagueNameAvailability lCheckNameLeague = (CCheckLeagueNameAvailability) pAction;
+            CFantasyLeagueEntity lLeagueWithThisName = lCrudMethods.find(CFantasyLeagueEntity.class, lCheckNameLeague.getLeagueName());
+            if (lLeagueWithThisName == null){
+                lAvailable = true;
+            }
+            else{
+                lAvailable = false;
+            }
+            CAction lReturn = new CReturnLeagueNameAvailable(lAvailable);
+            pPeer.getBasicRemote().sendObject(lReturn);
+        }
+
+        /*
+         * change the selected team
+         */
+
+        else if (pAction instanceof CSelectFantasyLeagueAction){
+            CSelectFantasyLeagueAction lSelectFantasyleague = (CSelectFantasyLeagueAction) pAction;
+            CUserEntity lUser = lSelectFantasyleague.getUser();
+            CFantasyTeamEntity lFantasyTeam = lSelectFantasyleague.getFantasyTeam();
+            lUser.changeSelectedLeague(lFantasyTeam);
+            if (lCrudMethods.openTransaction()){
+                lCrudMethods.update(lUser);
+                lCrudMethods.commitTransaction();
+            }
+
+            CAction lLeagueSelected = new CFantasyLeagueSelectedAction(lCrudMethods.find(CUserEntity.class, lUser.getId()));
+            pPeer.getBasicRemote().sendObject(lLeagueSelected);
+
+
+
         }
 
     }

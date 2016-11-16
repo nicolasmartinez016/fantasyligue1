@@ -58,8 +58,6 @@ public class CTeamsRankingAdapter extends ArrayAdapter<CTeamEntity> {
         CTeamEntity lTeam = getItem(position);
 
         viewHolder.mTeamName.setText(lTeam.getName());
-        System.out.println("-> " + lTeam.getLogoPath() + "<- ");
-        Log.i("tag", "-> " + lTeam.getLogoPath() + "<- ");
         int lResId = getContext().getResources().getIdentifier(lTeam.getLogoPath(), "drawable", getContext().getPackageName());
         viewHolder.mTeamLogo.setImageResource(lResId);
         viewHolder.mTeamPoints.setText(Integer.toString(lTeam.getPoints()));

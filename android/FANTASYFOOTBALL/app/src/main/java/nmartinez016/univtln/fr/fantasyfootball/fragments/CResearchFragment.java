@@ -244,7 +244,7 @@ public class CResearchFragment extends Fragment {
         });
 
         if (CAuthentificationActivity.getEmail() != null){
-            mConnectedAs.setText("connected as : " + CAuthentificationActivity.getEmail());
+            mConnectedAs.setText("connected as : " + CStaticVariables.getUser().getName());
         }
 
         loadTeams();
@@ -323,6 +323,26 @@ public class CResearchFragment extends Fragment {
 
     public void setPlayers(List<CPlayerEntity> pPlayers){
         mPlayers = pPlayers;
+    }
+
+    public List<CPlayerEntity> getPlayers(){
+        return mPlayers;
+    }
+
+    public void setTeams(List<CTeamEntity> pTeams){
+        mTeams = pTeams;
+    }
+
+    public List<CTeamEntity> getTeams(){
+        return mTeams;
+    }
+
+    public Spinner getTeamsSpinner(){
+        return mTeamsSpinner;
+    }
+
+    public ListView getListView(){
+        return mListView;
     }
 
     public void loadTeams(){

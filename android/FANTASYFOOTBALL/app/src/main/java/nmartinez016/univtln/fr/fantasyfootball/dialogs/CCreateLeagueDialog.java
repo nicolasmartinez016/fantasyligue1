@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +18,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import fr.univtln.nmartinez016.fantasyfootball.actions.CAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.load.CCheckLeagueNameAvailability;
+import fr.univtln.nmartinez016.fantasyfootball.actions.load.CCreateLeagueAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CFantasyLeagueJoinedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPublicFantasyLeaguesLoadedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CReturnLeagueNameAvailable;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CFantasyLeagueEntity;
+import nmartinez016.univtln.fr.fantasyfootball.CStaticVariables;
 import nmartinez016.univtln.fr.fantasyfootball.R;
+import nmartinez016.univtln.fr.fantasyfootball.adapters.CMyLeaguesAdapter;
+import nmartinez016.univtln.fr.fantasyfootball.websocket.CMessageHandler;
+import nmartinez016.univtln.fr.fantasyfootball.websocket.CTyrusClient;
 
 /**
  * Created by marti on 09/11/2016.
@@ -30,6 +44,8 @@ public class CCreateLeagueDialog extends DialogFragment {
     private TextView mCreateLeagueVisibilityTextView;
     private ToggleButton mPublicPrivateToggleButton;
     private Button mCreateLeagueButton;
+    private BroadcastReceiver mBroadCastReceiverWS;
+
 
     public CCreateLeagueDialog(){
         // empty constructor required
@@ -56,7 +72,9 @@ public class CCreateLeagueDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // send request to check if name taken
-                String lNameToCheck = "%" + mCreateLeagueEditText.getText().toString() + "%";
+                String lNameToCheck = mCreateLeagueEditText.getText().toString();
+                CTyrusClient.sendMessage(new CCheckLeagueNameAvailability(lNameToCheck
+                ));
             }
         });
 
@@ -64,9 +82,22 @@ public class CCreateLeagueDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 // send request to create league
-                CFantasyLeagueEntity lLeague = new CFantasyLeagueEntity.CFantasyLeagueBuilder().name(mCreateLeagueNameTextView.getText().toString()).build();
+                int lVisibility = 0;
+                if (mPublicPrivateToggleButton.isChecked()){
+                    lVisibility = CFantasyLeagueEntity.VISIBILITY_PUBLIC;
+                }
+                else{
+                    lVisibility = CFantasyLeagueEntity.VISIBILITY_PRIVATE;
+                }
+                CFantasyLeagueEntity lLeague = new CFantasyLeagueEntity.CFantasyLeagueBuilder().name(mCreateLeagueEditText.getText().toString()).visibility(lVisibility).capacity(Integer.parseInt(mCreateLeagueMaxCapacityEditText.getText().toString())).build();
+                CAction lCreateLeague = new CCreateLeagueAction.CCreateLeagueBuilder().fantasyLeague(lLeague).creator(CStaticVariables.getUser()).build();
+                CTyrusClient.sendMessage(lCreateLeague);
+                getDialog().cancel();
+
             }
         });
+
+        mCreateLeagueButton.setEnabled(false);
 
         return builder.create();
     }
@@ -74,12 +105,35 @@ public class CCreateLeagueDialog extends DialogFragment {
     public void checkAvailability(boolean pAvailable){
         if (pAvailable){
             // set image view to ok
-
+            mCreateLeagueButton.setEnabled(true);
         }
         else{
             // set image view to not ok
 
         }
         mCreateLeagueButton.setClickable(pAvailable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBroadCastReceiverWS = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent pIntent) {
+                // show public leagues
+                if (pIntent.getStringExtra(CMessageHandler.TYPE).equals(CReturnLeagueNameAvailable.class.getName())){
+                    CReturnLeagueNameAvailable lReturnLeagueNameAvailable = (CReturnLeagueNameAvailable) pIntent.getSerializableExtra(CMessageHandler.RETURN_LEAGUE_NAME_AVAILABLE);
+                    checkAvailability(lReturnLeagueNameAvailable.isAvailable());
+                }
+
+            }
+        };
+        getActivity().registerReceiver(mBroadCastReceiverWS, new IntentFilter(CMessageHandler.INTENT_TYPE));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(mBroadCastReceiverWS);
     }
 }

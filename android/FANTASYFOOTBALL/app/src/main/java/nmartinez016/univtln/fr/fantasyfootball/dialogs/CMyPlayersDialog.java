@@ -140,7 +140,7 @@ public class CMyPlayersDialog extends DialogFragment {
                             CTyrusClient.sendMessage(new CPutPlayerOnField.CPutPlayerOnFieldBuilder().user(CStaticVariables.getUser()).player(lPlayer).position(mPosition).build());
                         }
                         if (getActivity() instanceof CTabsActivity){
-                            ((CTabsActivity) getActivity()).redraw();
+                            //((CTabsActivity) getActivity()).redraw();
                         }
                     }
                 })

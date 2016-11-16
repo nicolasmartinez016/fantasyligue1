@@ -10,22 +10,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/row_myleagues_name"
+        android:layout_centerVertical="true"
         />
 
     <TextView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/row_myleagues_capacity"
         android:layout_toRightOf="@id/row_myleagues_name"
+        android:layout_centerVertical="true"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:text="select"
+        android:id="@+id/row_myleagues_select"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/row_myleagues_select"
         android:text="detail"
         android:id="@+id/row_myleagues_detail"
         />
-
 
 </RelativeLayout>

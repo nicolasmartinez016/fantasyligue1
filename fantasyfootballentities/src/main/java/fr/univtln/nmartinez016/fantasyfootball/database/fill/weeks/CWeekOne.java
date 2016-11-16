@@ -1236,23 +1236,23 @@ public class CWeekOne {
 */
 
 /*
-
-
-
-
-
-
-
-
-
-
-
-
         CTotwEntity lTotw1 = new CTotwEntity.CTotwBuilder().week(1).totwPlayers(lTotwPlayers).build();
 
         if (lCrudMethods.openTransaction()){
             lCrudMethods.create(lTotw1);
             lCrudMethods.commitTransaction();
         }*/
+
+
+// persist fantasy teams by week
+        List<CUserEntity> lUsers = (List<CUserEntity>)lCrudMethods.findWithNamedQuery(CUserEntity.GET_ALL);
+        for (CUserEntity lUser : lUsers){
+            //lUser.getCurrentFantasyTeam().addFantasyTeamByWeek(new CFantasyTeamByWeek.CFantasyTeamByWeekBuilder().week(1).fantasyTeam(lUser.getCurrentFantasyTeam()).yourPlayerEntries(lUser.getCurrentFantasyTeam().getYourPlayerEntries()).build());
+            lUser.addFantasyTeamsByWeek(1);
+            if (lCrudMethods.openTransaction()){
+                lCrudMethods.update(lUser);
+                lCrudMethods.commitTransaction();
+            }
+        }
     }
 }

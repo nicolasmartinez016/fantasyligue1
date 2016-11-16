@@ -12,12 +12,18 @@ import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CBuyingErrorPlayer
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CBuyingErrorPlayerTooMuchPlayersAndPlayerTooExpensive;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CBuyingErrorTooMuchPlayers;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CConnectedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CFantasyLeagueJoinedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CFantasyLeagueSelectedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CLeagueCreatedAction;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayerBoughtAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayerInvitedInFantasyLeagueAction;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayerMovedAction;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayerPutOnFieldAction;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayersLoadedAction;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPlayersLoadedByGoals;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPositionsLoadedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CPublicFantasyLeaguesLoadedAction;
+import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CReturnLeagueNameAvailable;
 import fr.univtln.nmartinez016.fantasyfootball.actions.loaded.CTeamsLoadedAction;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CPlayerEntity;
 
@@ -29,16 +35,22 @@ import fr.univtln.nmartinez016.fantasyfootball.entities.CPlayerEntity;
 public class CMessageHandler implements MessageHandler.Whole<CAction> {
 
     private CWebSocketService mWebSocketService;
-    public static String TYPE = "type";
-    public static String PLAYERS = "players";
-    public static String TEAMS = "teams";
-    public static String POSITIONS = "positions";
-    public static String INTENT_TYPE = "intent_type";
-    public static String PLAYERS_BY_GOALS = "playersbygoals";
-    public static String PLAYER_PUT_ON_FIELD = "player_put_on_field";
-    public static String PLAYER_MOVED = "player_moved";
+    public static final String TYPE = "type";
+    public static final String PLAYERS = "players";
+    public static final String TEAMS = "teams";
+    public static final String POSITIONS = "positions";
+    public static final String INTENT_TYPE = "intent_type";
+    public static final String PLAYERS_BY_GOALS = "playersbygoals";
+    public static final String PLAYER_PUT_ON_FIELD = "player_put_on_field";
+    public static final String PLAYER_MOVED = "player_moved";
     public static final String CONNECTED = "connected";
     public static final String PLAYER_BOUGHT = "player_bought";
+    public static final String FANTASY_LEAGUE_JOINED = "fantasy_league_joined";
+    public static final String FANTASY_LEAGUE_CREATED = "fantasy_league_created";
+    public static final String INVITED_IN_FANTASY_LEAGUE = "invited_in_fantasy_league";
+    public static final String PUBLIC_FANTASY_LEAGUES = "public_fantayçleagues";
+    public static final String FANTASY_LEAGUE_SELECTED = "fantasy_league_selected";
+    public static final String RETURN_LEAGUE_NAME_AVAILABLE = "return_league_name_available";
 
 
     public CMessageHandler(CWebSocketService pService){
@@ -183,6 +195,78 @@ public class CMessageHandler implements MessageHandler.Whole<CAction> {
             CBuyingErrorPlayerTooMuchPlayersAndPlayerTooExpensive lBuyingErrorPlayerTooMuchPlayersAndTooExpensive = (CBuyingErrorPlayerTooMuchPlayersAndPlayerTooExpensive) pAction;
             Intent lIntent = new Intent(INTENT_TYPE);
             lIntent.putExtra(TYPE, CBuyingErrorPlayerTooMuchPlayersAndPlayerTooExpensive.class.getName());
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * load all public leagues
+         */
+
+        if (pAction instanceof CPublicFantasyLeaguesLoadedAction){
+            CPublicFantasyLeaguesLoadedAction lPublicFantasyTeams = (CPublicFantasyLeaguesLoadedAction) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CPublicFantasyLeaguesLoadedAction.class.getName());
+            lIntent.putExtra(PUBLIC_FANTASY_LEAGUES, lPublicFantasyTeams);
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * league joined
+         */
+
+        if (pAction instanceof CFantasyLeagueJoinedAction){
+            CFantasyLeagueJoinedAction lFantasyLeagueJoined = (CFantasyLeagueJoinedAction) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CFantasyLeagueJoinedAction.class.getName());
+            lIntent.putExtra(FANTASY_LEAGUE_JOINED, lFantasyLeagueJoined);
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * league created
+         */
+
+        if (pAction instanceof CLeagueCreatedAction){
+            CLeagueCreatedAction lLeagueCreated = (CLeagueCreatedAction) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CLeagueCreatedAction.class.getName());
+            lIntent.putExtra(FANTASY_LEAGUE_CREATED, lLeagueCreated);
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * invited
+         */
+
+        if (pAction instanceof CPlayerInvitedInFantasyLeagueAction){
+            CPlayerInvitedInFantasyLeagueAction lPlayerInvited = (CPlayerInvitedInFantasyLeagueAction) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CPlayerInvitedInFantasyLeagueAction.class.getName());
+            lIntent.putExtra(INVITED_IN_FANTASY_LEAGUE, lPlayerInvited);
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * change the team selected
+         */
+
+        if (pAction instanceof CFantasyLeagueSelectedAction){
+            CFantasyLeagueSelectedAction lFantasyLeagueSelected = (CFantasyLeagueSelectedAction) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CFantasyLeagueSelectedAction.class.getName());
+            lIntent.putExtra(FANTASY_LEAGUE_SELECTED, lFantasyLeagueSelected);
+            mWebSocketService.sendBroadcast(lIntent);
+        }
+
+        /*
+         * return league name available
+         */
+
+        if (pAction instanceof CReturnLeagueNameAvailable){
+            CReturnLeagueNameAvailable lReturnLeagueNameAvailable = (CReturnLeagueNameAvailable) pAction;
+            Intent lIntent = new Intent(INTENT_TYPE);
+            lIntent.putExtra(TYPE, CReturnLeagueNameAvailable.class.getName());
+            lIntent.putExtra(RETURN_LEAGUE_NAME_AVAILABLE, lReturnLeagueNameAvailable);
             mWebSocketService.sendBroadcast(lIntent);
         }
 

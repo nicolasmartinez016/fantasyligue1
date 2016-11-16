@@ -8,15 +8,19 @@
         android:layout_width="match_parent">
     <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
             android:text="@string/hello_blank_fragment"
+            android:id="@+id/league_management_current_league"
             />
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:id="@+id/league_management_listview"
+            android:layout_below="@id/league_management_current_league"
+            android:layout_centerHorizontal="true"
             >
         </ListView>
 
@@ -34,6 +38,14 @@
             android:text="ligues publiques"
             android:id="@+id/league_management_public_leagues"
             android:layout_below="@id/league_management_create_league"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mes ligues"
+            android:id="@+id/league_management_my_leagues"
+            android:layout_below="@id/league_management_public_leagues"
             />
 
     </RelativeLayout>

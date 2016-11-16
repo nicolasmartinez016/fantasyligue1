@@ -71,7 +71,7 @@ public class CTyrusClient extends Thread{
         Log.d(LOG_TAG, "appel de run");
         Looper.prepare();
         mHandler = new Handler();
-        URI uri = URI.create("ws://" + IP_ADRESS_FAC + ":" + PORT +"/echo");
+        URI uri = URI.create("ws://" + IP_ADRESS/*_FAC*/ + ":" + PORT +"/echo");
         try {
             mClientManager.connectToServer(this, uri);
         } catch (DeploymentException e) {

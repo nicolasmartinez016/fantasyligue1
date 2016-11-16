@@ -67,6 +67,10 @@ public class CSquadManagementFragment extends Fragment {
         getContext().registerReceiver(mBroadCastReceiverWS, new IntentFilter(CMessageHandler.INTENT_TYPE));
     }
 
+    public CFieldView getFieldView(){
+        return mFieldView;
+    }
+
     public void redraw(){
         mFieldView.invalidate();
     }

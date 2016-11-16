@@ -59,12 +59,14 @@ import java.io.Serializable;
         @JsonSubTypes.Type(value = CReturnLeagueNameAvailable.class, name = "CReturnLeagueNameAvailable"),
         @JsonSubTypes.Type(value = CCheckLeagueNameAvailability.class, name = "CCheckLeagueNameAvailability"),
         @JsonSubTypes.Type(value = CInvitePlayerInFantasyLeagueAction.class, name = "CInvitePlayerInFantasyLeagueAction"),
-        @JsonSubTypes.Type(value = CPlayerInvitedInFantasyLeagueAction.class, name = "CPlayerInvitedInFantasyLeagueAction")
+        @JsonSubTypes.Type(value = CPlayerInvitedInFantasyLeagueAction.class, name = "CPlayerInvitedInFantasyLeagueAction"),
+        @JsonSubTypes.Type(value = CJoinFantasyLeagueAction.class, name = "CJoinFantasyLeagueAction"),
+        @JsonSubTypes.Type(value = CFantasyLeagueJoinedAction.class, name = "CFantasyLeagueJoinedAction"),
+        @JsonSubTypes.Type(value = CCreateLeagueAction.class, name = "CCreateLeagueAction"),
+        @JsonSubTypes.Type(value = CLeagueCreatedAction.class, name = "CLeagueCreatedAction"),
+        @JsonSubTypes.Type(value = CSelectFantasyLeagueAction.class, name = "CSelectFantasyLeagueAction"),
+        @JsonSubTypes.Type(value = CFantasyLeagueSelectedAction.class, name = "CFantasyLeagueSelectedAction")
 }
-
-
-
-
 )
 public abstract class CAction implements Serializable {
 

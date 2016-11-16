@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.univtln.nmartinez016.fantasyfootball.entities.CFantasyLeagueEntity;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CPlayerEntity;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CPositionEntity;
 import fr.univtln.nmartinez016.fantasyfootball.entities.CUserEntity;
@@ -17,6 +18,8 @@ import fr.univtln.nmartinez016.fantasyfootball.entities.CYourPlayerEntry;
 public class CStaticVariables {
 
     private static CUserEntity mUser;
+
+    private static CFantasyLeagueEntity mFantasyLeagueToShowDetails;
 
     private static List<CPositionEntity> mPositions;
 
@@ -76,23 +79,12 @@ public class CStaticVariables {
         }
         return lCurrentPosition;
     }
-/*
-    public static void movePlayer(CPositionEntity pStartPosition, CPlayerEntity pPlayerToMove, CPositionEntity pEndPosition){
-        int i = 0;
-        for (CYourPlayerEntry lPlayerEntry : mUser.getFantasyTeam().getYourPlayerEntries()){
-            if (lPlayerEntry.getPosition() != null){
-                if (lPlayerEntry.getPosition() == pEndPosition){
-                    mUser.getFantasyTeam().editYourPlayerEntryPosition(i, pStartPosition);
-                }
-                if (lPlayerEntry.getPlayer() != null){
-                    if (lPlayerEntry.getPlayer() == pPlayerToMove){
-                        mUser.getFantasyTeam().editYourPlayerEntryPosition(i, pEndPosition);
-                    }
-                }
-            }
-            i++;
-        }
-    }*/
 
+    public static CFantasyLeagueEntity getFantasyLeagueToShowDetails(){
+        return mFantasyLeagueToShowDetails;
+    }
 
+    public static void setFantasyLeagueToShowDetails(CFantasyLeagueEntity pFantasyLeague){
+        mFantasyLeagueToShowDetails = pFantasyLeague;
+    }
 }

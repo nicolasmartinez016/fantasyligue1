@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.instrument.ClassFileTransformer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,12 @@ import java.util.List;
 
 @Entity
 @Table(schema = "fantasyfootball")
-
+@NamedQueries({@NamedQuery(name = CUserEntity.GET_ALL, query = "select u from CUserEntity u")})
 @JsonIdentityInfo(generator = ObjectIdGenerators.StringIdGenerator.class, property = "@id", scope = CUserEntity.class)
 
 public class CUserEntity implements Serializable {
+
+    public static final String GET_ALL = "CUserEntity.getAll";
 
     public static final int BUYING_SUCCESS = 0;
     public static final int BUYING_ERROR_OVER_13_PLAYERS = -1;
@@ -28,6 +31,7 @@ public class CUserEntity implements Serializable {
 
     @Id
     private String mId;
+    private String mName;
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(schema = "fantasyfootball")
     private List<CFantasyLeagueEntity> mFantasyLeagues;
@@ -38,10 +42,10 @@ public class CUserEntity implements Serializable {
 
     public CUserEntity(CUserBuilder pBuilder){
         mId = pBuilder.mId;
+        mName = pBuilder.mName;
         mFantasyLeagues = pBuilder.mFantasyLeagues;
         mCoins = pBuilder.mCoins;
         if (mFantasyLeagues != null && mFantasyLeagues.size() > 0){
-            System.out.println("la ok");
             mFantasyLeagues.get(0).addUser(this);
         }
         else{
@@ -55,6 +59,14 @@ public class CUserEntity implements Serializable {
 
     public void setId(String pId){
         mId = pId;
+    }
+
+    public String getName(){
+        return mName;
+    }
+
+    public void setName(String pName){
+        mName = pName;
     }
 
     public List<CFantasyLeagueEntity> getFantasyLeagues(){
@@ -73,7 +85,32 @@ public class CUserEntity implements Serializable {
         mCoins = pCoins;
     }
 
+    @JsonIgnore
+    public List<CFantasyTeamEntity> getFantasyTeams(){
+        List<CFantasyTeamEntity> lFantasyTeams = new ArrayList<CFantasyTeamEntity>();
+        for (CFantasyLeagueEntity lFantasyLeague : mFantasyLeagues){
+            for (CFantasyTeamEntity lFantasyTeam : lFantasyLeague.getFantasyTeams()){
+                if (lFantasyTeam.getUser().getId().equals(mId)){
+                    lFantasyTeams.add(lFantasyTeam);
+                }
+            }
+        }
+        return lFantasyTeams;
+    }
 
+    public void addFantasyTeamsByWeek(int pWeek){
+        for (CFantasyTeamEntity lFantasyTeam : getFantasyTeams()){
+            lFantasyTeam.addFantasyTeamByWeek(new CFantasyTeamByWeek.CFantasyTeamByWeekBuilder().fantasyTeam(lFantasyTeam).yourPlayerEntries(lFantasyTeam.getYourPlayerEntries()).week(pWeek).build());
+        }
+    }
+
+    public void addFantasyLeague(CFantasyLeagueEntity pFantasyLeague){
+        pFantasyLeague.addUser(this);
+        if (mFantasyLeagues == null){
+            mFantasyLeagues = new ArrayList<CFantasyLeagueEntity>();
+        }
+        mFantasyLeagues.add(pFantasyLeague);
+    }
 
     public int movePlayer(CPositionEntity pInitialPosition, CPositionEntity pFinalPosition){
         return getCurrentFantasyTeam().movePlayer(pInitialPosition, pFinalPosition);
@@ -99,6 +136,17 @@ public class CUserEntity implements Serializable {
             }
             else{
                 return BUYING_ERROR_OVER_13_PLAYERS;
+            }
+        }
+    }
+
+    public void changeSelectedLeague(CFantasyTeamEntity pFantasyTeam){
+        getCurrentFantasyTeam().setSelected(false);
+        for (CFantasyLeagueEntity lLeague : mFantasyLeagues){
+            for (CFantasyTeamEntity lTeam : lLeague.getFantasyTeams()){
+                if (lTeam.getId() == pFantasyTeam.getId()){
+                    lTeam.setSelected(true);
+                }
             }
         }
     }
@@ -133,9 +181,22 @@ public class CUserEntity implements Serializable {
         return null;
     }
 
+    @JsonIgnore
+    public int getPointsByFantasyLeague(CFantasyLeagueEntity pFantasyLeague){
+        int lPoints = 0;
+        List<CFantasyTeamEntity> lFantasyTeams = pFantasyLeague.getFantasyTeams();
+        for (CFantasyTeamEntity lFantasyTeam : lFantasyTeams){
+            if (lFantasyTeam.getUser().getId().equals(mId)){
+                lPoints = lFantasyTeam.getPoints();
+            }
+        }
+        return lPoints;
+    }
+
 
     public static class CUserBuilder{
         private String mId;
+        private String mName;
         private List<CFantasyLeagueEntity> mFantasyLeagues;
         private int mCoins;
 
@@ -143,6 +204,11 @@ public class CUserEntity implements Serializable {
 
         public CUserBuilder id(String pId){
             mId = pId;
+            return this;
+        }
+
+        public CUserBuilder name(String pName){
+            mName = pName;
             return this;
         }
 
